@@ -2,7 +2,7 @@ import querystring from 'querystring';
 import moment from 'moment';
 import { AxiosInstance } from 'axios';
 import { Authentication } from './responses/Authentication';
-import { authorizeEndpoint } from './endpoints';
+import { AuthorizeEndpoint } from './endpoints';
 import { AuthenticationErrorResponse } from './responses/AuthenticationErrorResponse';
 import { AuthenticationError } from './errors/AuthenticationError';
 
@@ -46,7 +46,7 @@ export class OAuth {
             }
         }
         try {
-            const response = await this.client.post(authorizeEndpoint, querystring.stringify(data), config);
+            const response = await this.client.post(AuthorizeEndpoint, querystring.stringify(data), config);
             const auth = <Authentication>response.data;
             return auth;
         } catch (error) {

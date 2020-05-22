@@ -1,1 +1,1 @@
-export const authorizeEndpoint: string = "/pl/standard/user/oauth/authorize";
+export const AuthorizeEndpoint: string = "/pl/standard/user/oauth/authorize";
