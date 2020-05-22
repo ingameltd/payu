@@ -1,10 +1,10 @@
 import querystring from 'querystring';
 import moment from 'moment';
 import { AxiosInstance } from 'axios';
-import { Authentication } from './responses/Authentication';
-import { AuthorizeEndpoint } from './endpoints';
-import { AuthenticationErrorResponse } from './responses/AuthenticationErrorResponse';
-import { AuthenticationError } from './errors/AuthenticationError';
+import { AuthenticationResponse } from './Authentication';
+import { AuthorizeEndpoint } from '../endpoints';
+import { AuthenticationErrorResponse } from './AuthenticationErrorResponse';
+import { AuthenticationError } from '../errors/AuthenticationError';
 
 
 export class OAuth {
@@ -33,7 +33,7 @@ export class OAuth {
         this._accessToken = '';
     }
 
-    private async _fetchAccessToken (): Promise<Authentication> {
+    private async _fetchAccessToken (): Promise<AuthenticationResponse> {
         const data = {
             grant_type: "client_credentials",
             client_id: this.clientId,
@@ -47,7 +47,7 @@ export class OAuth {
         }
         try {
             const response = await this.client.post(AuthorizeEndpoint, querystring.stringify(data), config);
-            const auth = <Authentication>response.data;
+            const auth = <AuthenticationResponse>response.data;
             return auth;
         } catch (error) {
             const errResponse = <AuthenticationErrorResponse>error.response.data;

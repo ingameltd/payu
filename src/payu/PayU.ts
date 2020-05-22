@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance } from 'axios';
-import { OAuth } from './OAuth';
+import { OAuth } from './auth/OAuth';
 
 const SandboxEndpoint = "https://secure.snd.payu.com";
 const ProductionEdnpoint = "https://secure.payu.com";
