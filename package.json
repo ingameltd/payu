@@ -1,0 +1,41 @@
+{
+  "name": "@ingameltd/payu",
+  "version": "1.0.0",
+  "description": "A typed PayU client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "build:check": "tsc --noEmit",
+    "watch": "tsc --watch",
+    "test": "echo 'no tests yet'",
+    "docs": "npx typedoc --out docs src"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ingameltd/payu.git"
+  },
+  "keywords": [
+    "payu",
+    "typescript",
+    "node"
+  ],
+  "author": "Kasun Vithanage",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ingameltd/payu/issues"
+  },
+  "homepage": "https://github.com/ingameltd/payu#readme",
+  "devDependencies": {
+    "@types/node": "^14.0.5",
+    "typedoc": "^0.17.7",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
