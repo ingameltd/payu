@@ -6,7 +6,6 @@ import { AuthorizeEndpoint } from '../endpoints';
 import { AuthenticationErrorResponse } from './AuthenticationErrorResponse';
 import { AuthenticationError } from '../errors/AuthenticationError';
 
-
 export class OAuth {
     private client: AxiosInstance;
     private clientId: number;

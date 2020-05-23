@@ -10,7 +10,7 @@ const client = new PayU(387171, "23f15afa2acc5c71ad0844d577fcb7be", 387171, "abc
             continueUrl: 'https://quickmargo.pl/order?ok',
             description: 'my payment',
             currencyCode: Currency.PLN,
-            totalAmount: 1000,
+            totalAmount: -1000,
             products: [
                 { name: 'margonem bot', quantity: 1, unitPrice: 1000, virtual: true, }
             ]
