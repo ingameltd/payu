@@ -2,9 +2,9 @@ import Axios, { AxiosInstance } from 'axios';
 import { OAuth } from './auth/OAuth';
 import { OrderCreateResponse } from './orders/OrderCreateResponse';
 import { Order } from './orders/Order';
-import { OrderCreateEndpoint } from './endpoints';
+import { OrderEndpoint } from './endpoints';
 import { PayUError } from './errors/PayUError';
-import { OrderCreationErrorResponse } from './orders/OrderCreationErrorResponse';
+import { OrderStatusResponse } from './orders/OrderStatusResponse';
 
 
 const SandboxEndpoint = "https://secure.snd.payu.com";
@@ -68,6 +68,7 @@ export class PayU {
      *
      * @param {Order} order - order to be created
      * @returns {Promise<OrderCreateResponse>}
+     * @throws {PayUError}
      * @memberof PayU
      */
     public async createOrder (order: Order): Promise<OrderCreateResponse> {
@@ -82,7 +83,7 @@ export class PayU {
 
         try {
             const response = await this.client.post(
-                OrderCreateEndpoint,
+                OrderEndpoint,
                 data,
                 {
                     headers: headers,
@@ -96,7 +97,71 @@ export class PayU {
             return <OrderCreateResponse>response.data;
         } catch (error) {
             console.log(error.response.data)
-            const resp = <OrderCreationErrorResponse>error.response.data;
+            const resp = <OrderStatusResponse>error.response.data;
+            throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
+        }
+    }
+
+    /**
+     * Captures an order from payU making it approved
+     *
+     * @param {string} orderId
+     * @returns {Promise<OrderStatusResponse>}
+     * @throws {PayUError}
+     * @memberof PayU
+     */
+    public async captureOrder (orderId: string): Promise<OrderStatusResponse> {
+        const token = await this.oAuth.getAccessToken();
+        const data = {
+            orderId: orderId,
+            orderStatus: "COMPLETED"
+        };
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        };
+
+        try {
+            const response = await this.client.put(
+                `${OrderEndpoint}/${orderId}/status`,
+                data,
+                {
+                    headers: headers,
+                }
+            );
+
+            return <OrderStatusResponse>response.data;
+        } catch (error) {
+            console.log(error.response.data)
+            const resp = <OrderStatusResponse>error.response.data;
+            throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
+        }
+    }
+
+    /**
+     * Cancels a PayU order
+     *
+     * @param {string} orderId
+     * @returns {Promise<OrderStatusResponse>}
+     * @memberof PayU
+     */
+    public async cancelOrder (orderId: string): Promise<OrderStatusResponse> {
+        const token = await this.oAuth.getAccessToken();
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        };
+
+        try {
+            const response = await this.client.delete(
+                `${OrderEndpoint}/${orderId}`,
+                {
+                    headers: headers,
+                }
+            );
+
+            return <OrderStatusResponse>response.data;
+        } catch (error) {
+            console.log(error.response.data)
+            const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
     }
