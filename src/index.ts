@@ -1,5 +1,5 @@
-import { PayU } from './payu/PayU';
-import { Currency } from './payu/enums/Currency';
+import { PayU } from './PayU';
+import { Currency } from './enums/Currency';
 
 const client = new PayU(387171, "23f15afa2acc5c71ad0844d577fcb7be", 387171, "abc", { sandbox: true });
 (async () => {
