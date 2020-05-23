@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import Axios, { AxiosInstance } from 'axios';
 import { OAuth } from './auth/OAuth';
 import { OrderCreateResponse } from './orders/OrderCreateResponse';
@@ -5,6 +6,7 @@ import { Order } from './orders/Order';
 import { OrderEndpoint } from './endpoints';
 import { PayUError } from './errors/PayUError';
 import { OrderStatusResponse } from './orders/OrderStatusResponse';
+import { SandboxIPs, ProductionIPs } from './ips';
 
 
 const SandboxEndpoint = "https://secure.snd.payu.com";
@@ -23,6 +25,7 @@ export class PayU {
     private client: AxiosInstance;
     private options: PayUOptions;
     private oAuth: OAuth;
+    private ips: string[];
 
     /**
      * Creates an instance of PayU.
@@ -47,6 +50,7 @@ export class PayU {
         this.options = options
 
         this.baseEndpoint = !this.options.sandbox ? ProductionEdnpoint : SandboxEndpoint;
+        this.ips = !this.options.sandbox ? ProductionIPs : SandboxIPs;
         this.client = Axios.create({ baseURL: this.baseEndpoint })
 
         this.oAuth = new OAuth(this.client, this.clientId, this.clientSecret);
@@ -164,5 +168,45 @@ export class PayU {
             const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
+    }
+
+    /**
+     * Convert a key=value; list to json
+     *
+     * @private
+     * @param {string} data - key value string
+     * @returns {any}
+     * @memberof PayU
+     */
+    private parseHeaderToJson (data: string): any {
+        const parts = data.split(';');
+        let obj: any = {};
+        parts.forEach(part => {
+            const tok = part.split('=');
+            obj[tok[0]] = tok[1];
+        });
+
+        return obj;
+    }
+
+    /**
+     * Verify notification result with signature
+     * 
+     * @param {string} payuHeader - header string from **OpenPayu-Signature**
+     * @param {string} jsonNotification - notification body as a string
+     * @returns {boolean}
+     * @memberof PayU
+     */
+    public verifyNotification (payuHeader: string, jsonNotification: string): boolean {
+        const tokens = this.parseHeaderToJson(payuHeader);
+        if (!tokens['signature'] || tokens['signature'] === '' || !tokens['algorithm'] || tokens['algorithm'] === '') {
+            return false;
+        }
+
+        const concatnated = jsonNotification + this.secondKey;
+        const exceptedSignature = crypto.createHash('md5').update(concatnated).digest('hex');
+        const incomingSignature = tokens['signature'];
+
+        return exceptedSignature === incomingSignature;
     }
 }
