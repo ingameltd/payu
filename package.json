@@ -1,6 +1,6 @@
 {
   "name": "@ingameltd/payu",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "PayU client for NodeJS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,7 @@
     "node"
   ],
   "author": "Kasun Vithanage",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ingameltd/payu/issues"
   },
