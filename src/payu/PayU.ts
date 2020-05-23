@@ -1,5 +1,11 @@
 import Axios, { AxiosInstance } from 'axios';
 import { OAuth } from './auth/OAuth';
+import { OrderCreateResponse } from './orders/OrderCreateResponse';
+import { Order } from './orders/Order';
+import { OrderCreateEndpoint } from './endpoints';
+import { PayUError } from './errors/PayUError';
+import { OrderCreationErrorResponse } from './orders/OrderCreationErrorResponse';
+
 
 const SandboxEndpoint = "https://secure.snd.payu.com";
 const ProductionEdnpoint = "https://secure.payu.com";
@@ -57,5 +63,41 @@ export class PayU {
         return this.oAuth.getAccessToken()
     }
 
+    /**
+     * Create a new order
+     *
+     * @param {Order} order - order to be created
+     * @returns {Promise<OrderCreateResponse>}
+     * @memberof PayU
+     */
+    public async createOrder (order: Order): Promise<OrderCreateResponse> {
+        const token = await this.oAuth.getAccessToken();
+        const data = {
+            ...order,
+            merchantPosId: this.merchantPosId
+        };
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        };
 
+        try {
+            const response = await this.client.post(
+                OrderCreateEndpoint,
+                data,
+                {
+                    headers: headers,
+                    maxRedirects: 0,
+                    validateStatus: (status) => {
+                        return status === 302
+                    }
+                }
+            );
+
+            return <OrderCreateResponse>response.data;
+        } catch (error) {
+            console.log(error.response.data)
+            const resp = <OrderCreationErrorResponse>error.response.data;
+            throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
+        }
+    }
 }
