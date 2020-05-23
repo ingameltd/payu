@@ -209,4 +209,15 @@ export class PayU {
 
         return exceptedSignature === incomingSignature;
     }
+
+    /**
+     * Validates the IP address with PayU servers
+     *
+     * @param {string} ip - ip address
+     * @returns {boolean}
+     * @memberof PayU
+     */
+    public isIpValid (ip: string): boolean {
+        return this.ips.includes(ip);
+    }
 }
