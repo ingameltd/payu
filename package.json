@@ -1,7 +1,7 @@
 {
   "name": "@ingameltd/payu",
   "version": "1.0.0",
-  "description": "A typed PayU client",
+  "description": "PayU client for NodeJS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
