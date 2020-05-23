@@ -50,6 +50,8 @@ export class OAuth {
             const auth = <AuthenticationResponse>response.data;
             return auth;
         } catch (error) {
+            this._accessToken = '';
+            this._expiry = moment().subtract(1, 'minute').toDate()
             const errResponse = <AuthenticationErrorResponse>error.response.data;
             throw new AuthenticationError(errResponse.error, errResponse.error_description);
         }
