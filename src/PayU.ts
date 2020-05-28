@@ -100,7 +100,6 @@ export class PayU {
 
             return <OrderCreateResponse>response.data;
         } catch (error) {
-            console.log(error.response.data)
             const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
@@ -135,7 +134,6 @@ export class PayU {
 
             return <OrderStatusResponse>response.data;
         } catch (error) {
-            console.log(error.response.data)
             const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
@@ -164,7 +162,6 @@ export class PayU {
 
             return <OrderStatusResponse>response.data;
         } catch (error) {
-            console.log(error.response.data)
             const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
