@@ -37,6 +37,7 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm run docs
+      - run: touch docs/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
