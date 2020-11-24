@@ -67,6 +67,14 @@ To cancel an order before completed call this method.
 const result = await payU.cancelOrder("payU order Id from notification");
 ```
 
+### Refund order
+
+To refund an order after completed call this method.
+
+```typescript
+const result = await payU.refundOrder("payU order Id from notification", "reason");
+```
+
 ### Verify notification
 
 To verify notification are valid cryptogrpically this method can be used.
