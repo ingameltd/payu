@@ -168,6 +168,41 @@ export class PayU {
     }
 
     /**
+     * Refunds a PayU order
+     *
+     * @param {string} orderId - payu order id
+     * @param {string} description - description for refund
+     * @returns {Promise<OrderStatusResponse>}
+     * @memberof PayU
+     */
+    public async refundOrder (orderId: string, description: string): Promise<OrderStatusResponse> {
+        const token = await this.oAuth.getAccessToken();
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        };
+
+        try {
+            const response = await this.client.post(
+                `${OrderEndpoint}/${orderId}/refund`,
+                {
+                    refund: {
+                        description
+                    }
+                },
+                {
+                    headers: headers
+                }
+            );
+
+            return <OrderStatusResponse>response.data;
+        } catch (error) {
+            console.log(error)
+            const resp = <OrderStatusResponse>error.response.data;
+            throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
+        }
+    }
+
+    /**
      * Convert a key=value; list to json
      *
      * @private
