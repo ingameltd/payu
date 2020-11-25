@@ -196,7 +196,6 @@ export class PayU {
 
             return <OrderStatusResponse>response.data;
         } catch (error) {
-            console.log(error)
             const resp = <OrderStatusResponse>error.response.data;
             throw new PayUError(resp.status.statusCode, resp.status.code || '', resp.status.codeLiteral, resp.status.statusDesc);
         }
