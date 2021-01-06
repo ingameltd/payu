@@ -79,7 +79,7 @@
 				<a href="#importing" id="importing" style="color: inherit; text-decoration: none;">
 					<h3>Importing</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { PayU, Order, Buyer, Product, Currency } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@ingameltd/payu&quot;</span>;</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { PayU, Order, Buyer, Product, Currency } <span class="hljs-keyword">from</span> <span class="hljs-string">"@ingameltd/payu"</span>;</code></pre>
 				<a href="#initialization" id="initialization" style="color: inherit; text-decoration: none;">
 					<h3>Initialization</h3>
 				</a>
@@ -90,41 +90,41 @@
 					<li><strong>secondKey</strong> : second key from panel</li>
 				</ul>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> payU = <span class="hljs-keyword">new</span> PayU(clientId, clientSecret, merchantPosId, secondKey, {
-  <span class="hljs-attr">sandbox</span>: <span class="hljs-literal">false</span>,
+  sandbox: <span class="hljs-literal">false</span>,
 });</code></pre>
 				<a href="#create-an-order" id="create-an-order" style="color: inherit; text-decoration: none;">
 					<h3>Create an order</h3>
 				</a>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.createOrder({
-  <span class="hljs-attr">notifyUrl</span>: <span class="hljs-string">&quot;https://my.shop.notify.com/notify&quot;</span>,
-  <span class="hljs-attr">customerIp</span>: <span class="hljs-string">&quot;127.0.0.1&quot;</span>,
-  <span class="hljs-attr">continueUrl</span>: <span class="hljs-string">&quot;https://myshop.com/order?id=abc&quot;</span>,
-  <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;My order&quot;</span>,
-  <span class="hljs-attr">currencyCode</span>: Currency.PLN,
-  <span class="hljs-attr">totalAmount</span>: <span class="hljs-number">2000</span>,
-  <span class="hljs-attr">buyer</span>: {
-    <span class="hljs-attr">email</span>: <span class="hljs-string">&quot;buyer@email.com&quot;</span>,
+  notifyUrl: <span class="hljs-string">"https://my.shop.notify.com/notify"</span>,
+  customerIp: <span class="hljs-string">"127.0.0.1"</span>,
+  continueUrl: <span class="hljs-string">"https://myshop.com/order?id=abc"</span>,
+  description: <span class="hljs-string">"My order"</span>,
+  currencyCode: Currency.PLN,
+  totalAmount: <span class="hljs-number">2000</span>,
+  buyer: {
+    email: <span class="hljs-string">"buyer@email.com"</span>,
   },
-  <span class="hljs-attr">products</span>: [
-    { <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;mobile phone #1&quot;</span>, <span class="hljs-attr">quantity</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">unitPrice</span>: <span class="hljs-number">1000</span> },
-    { <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;mobile phone #2&quot;</span>, <span class="hljs-attr">quantity</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">unitPrice</span>: <span class="hljs-number">1000</span> },
+  products: [
+    { name: <span class="hljs-string">"mobile phone #1"</span>, quantity: <span class="hljs-number">1</span>, unitPrice: <span class="hljs-number">1000</span> },
+    { name: <span class="hljs-string">"mobile phone #2"</span>, quantity: <span class="hljs-number">1</span>, unitPrice: <span class="hljs-number">1000</span> },
   ],
 });</code></pre>
 				<a href="#capture-order" id="capture-order" style="color: inherit; text-decoration: none;">
 					<h3>Capture order</h3>
 				</a>
 				<p>If your shop does not approve payments automatically, you need to capture them and confirm.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.captureOrder(<span class="hljs-string">&quot;payU order Id from notification&quot;</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.captureOrder(<span class="hljs-string">"payU order Id from notification"</span>);</code></pre>
 				<a href="#cancel-order" id="cancel-order" style="color: inherit; text-decoration: none;">
 					<h3>Cancel order</h3>
 				</a>
 				<p>To cancel an order before completed call this method.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.cancelOrder(<span class="hljs-string">&quot;payU order Id from notification&quot;</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.cancelOrder(<span class="hljs-string">"payU order Id from notification"</span>);</code></pre>
 				<a href="#refund-order" id="refund-order" style="color: inherit; text-decoration: none;">
 					<h3>Refund order</h3>
 				</a>
 				<p>To refund an order after completed call this method.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.refundOrder(<span class="hljs-string">&quot;payU order Id from notification&quot;</span>, <span class="hljs-string">&quot;reason&quot;</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.refundOrder(<span class="hljs-string">"payU order Id from notification"</span>, <span class="hljs-string">"reason"</span>);</code></pre>
 				<a href="#verify-notification" id="verify-notification" style="color: inherit; text-decoration: none;">
 					<h3>Verify notification</h3>
 				</a>
@@ -132,7 +132,7 @@
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> headers = req.headers;
 
 <span class="hljs-keyword">const</span> isValid = payU.verifyNotification(
-  headers[<span class="hljs-string">&quot;OpenPayu-Signature&quot;</span>],
+  headers[<span class="hljs-string">"OpenPayu-Signature"</span>],
   <span class="hljs-built_in">JSON</span>.stringify(req.body)
 );
 
@@ -142,7 +142,7 @@
 				</a>
 				<p>To validate IPs are correct, use following method. It will automatically adjust to match
 				your environment(production or sandbox)</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> isIpValid = payU.isIpValid(<span class="hljs-string">&quot;127.0.0.1&quot;</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> isIpValid = payU.isIpValid(<span class="hljs-string">"127.0.0.1"</span>);</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
