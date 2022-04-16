@@ -1,243 +1,77 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@ingameltd/payu</title>
-	<meta name="description" content="Documentation for @ingameltd/payu">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@ingameltd/payu</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1>@ingameltd/payu</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#payu-for-nodejs" id="payu-for-nodejs" style="color: inherit; text-decoration: none;">
-					<h1>PayU for NodeJS</h1>
-				</a>
-				<p><img src="https://github.com/ingameltd/payu/workflows/Build/badge.svg" alt="Build"> <img src="https://img.shields.io/npm/v/@ingameltd/payu" alt=""> <img src="https://img.shields.io/github/last-commit/ingameltd/payu" alt=""></p>
-				<p>A type safe PayU client for NodeJS written in Typescript</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<pre><code class="language-bash">npm install --save @ingameltd/payu</code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<a href="#importing" id="importing" style="color: inherit; text-decoration: none;">
-					<h3>Importing</h3>
-				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { PayU, Order, Buyer, Product, Currency } <span class="hljs-keyword">from</span> <span class="hljs-string">"@ingameltd/payu"</span>;</code></pre>
-				<a href="#initialization" id="initialization" style="color: inherit; text-decoration: none;">
-					<h3>Initialization</h3>
-				</a>
-				<ul>
-					<li><strong>clientId</strong> : Client ID from PayU</li>
-					<li><strong>clientSecret</strong> : client secret from panel</li>
-					<li><strong>merchantPosId</strong> : pos id from panel</li>
-					<li><strong>secondKey</strong> : second key from panel</li>
-				</ul>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> payU = <span class="hljs-keyword">new</span> PayU(clientId, clientSecret, merchantPosId, secondKey, {
-  sandbox: <span class="hljs-literal">false</span>,
-});</code></pre>
-				<a href="#create-an-order" id="create-an-order" style="color: inherit; text-decoration: none;">
-					<h3>Create an order</h3>
-				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.createOrder({
-  notifyUrl: <span class="hljs-string">"https://my.shop.notify.com/notify"</span>,
-  customerIp: <span class="hljs-string">"127.0.0.1"</span>,
-  continueUrl: <span class="hljs-string">"https://myshop.com/order?id=abc"</span>,
-  description: <span class="hljs-string">"My order"</span>,
-  currencyCode: Currency.PLN,
-  totalAmount: <span class="hljs-number">2000</span>,
-  buyer: {
-    email: <span class="hljs-string">"buyer@email.com"</span>,
-  },
-  products: [
-    { name: <span class="hljs-string">"mobile phone #1"</span>, quantity: <span class="hljs-number">1</span>, unitPrice: <span class="hljs-number">1000</span> },
-    { name: <span class="hljs-string">"mobile phone #2"</span>, quantity: <span class="hljs-number">1</span>, unitPrice: <span class="hljs-number">1000</span> },
-  ],
-});</code></pre>
-				<a href="#capture-order" id="capture-order" style="color: inherit; text-decoration: none;">
-					<h3>Capture order</h3>
-				</a>
-				<p>If your shop does not approve payments automatically, you need to capture them and confirm.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.captureOrder(<span class="hljs-string">"payU order Id from notification"</span>);</code></pre>
-				<a href="#cancel-order" id="cancel-order" style="color: inherit; text-decoration: none;">
-					<h3>Cancel order</h3>
-				</a>
-				<p>To cancel an order before completed call this method.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.cancelOrder(<span class="hljs-string">"payU order Id from notification"</span>);</code></pre>
-				<a href="#refund-order" id="refund-order" style="color: inherit; text-decoration: none;">
-					<h3>Refund order</h3>
-				</a>
-				<p>To refund an order after completed call this method.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> payU.refundOrder(<span class="hljs-string">"payU order Id from notification"</span>, <span class="hljs-string">"reason"</span>);</code></pre>
-				<a href="#verify-notification" id="verify-notification" style="color: inherit; text-decoration: none;">
-					<h3>Verify notification</h3>
-				</a>
-				<p>To verify notification are valid cryptogrpically this method can be used.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> headers = req.headers;
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@ingameltd/payu</title><meta name="description" content="Documentation for @ingameltd/payu"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@ingameltd/payu</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@ingameltd/payu </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#payu-for-nodejs" id="payu-for-nodejs" style="color: inherit; text-decoration: none;">
+  <h1>PayU for NodeJS</h1>
+</a>
+<p><img src="https://github.com/ingameltd/payu/workflows/Build/badge.svg" alt="Build"> <img src="https://img.shields.io/npm/v/@ingameltd/payu" alt=""> <img src="https://img.shields.io/github/last-commit/ingameltd/payu" alt=""></p>
+<p>A type safe PayU client for NodeJS written in Typescript</p>
 
-<span class="hljs-keyword">const</span> isValid = payU.verifyNotification(
-  headers[<span class="hljs-string">"OpenPayu-Signature"</span>],
-  <span class="hljs-built_in">JSON</span>.stringify(req.body)
-);
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">npm install --save @ingameltd/payu</span>
+</code></pre>
 
-<span class="hljs-built_in">console</span>.log(isValid);</code></pre>
-				<a href="#validate-ips" id="validate-ips" style="color: inherit; text-decoration: none;">
-					<h3>Validate IPs</h3>
-				</a>
-				<p>To validate IPs are correct, use following method. It will automatically adjust to match
-				your environment(production or sandbox)</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> isIpValid = payU.isIpValid(<span class="hljs-string">"127.0.0.1"</span>);</code></pre>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_payu_.html">&quot;<wbr>Pay<wbr>U&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_auth_authentication_.html">&quot;auth/<wbr>Authentication&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_auth_authenticationerrorresponse_.html">&quot;auth/<wbr>Authentication<wbr>Error<wbr>Response&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_auth_oauth_.html">&quot;auth/OAuth&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_endpoints_.html">&quot;endpoints&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_enums_country_.html">&quot;enums/<wbr>Country&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_enums_currency_.html">&quot;enums/<wbr>Currency&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_errors_authenticationerror_.html">&quot;errors/<wbr>Authentication<wbr>Error&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_errors_payuerror_.html">&quot;errors/<wbr>PayUError&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_ips_.html">&quot;ips&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_buyer_.html">&quot;orders/<wbr>Buyer&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_order_.html">&quot;orders/<wbr>Order&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_ordercreateresponse_.html">&quot;orders/<wbr>Order<wbr>Create<wbr>Response&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_ordercreatestatus_.html">&quot;orders/<wbr>Order<wbr>Create<wbr>Status&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_orderstatusresponse_.html">&quot;orders/<wbr>Order<wbr>Status<wbr>Response&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_product_.html">&quot;orders/<wbr>Product&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_orders_status_.html">&quot;orders/<wbr>Status&quot;</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
-</body>
-</html>
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+
+<a href="#importing" id="importing" style="color: inherit; text-decoration: none;">
+  <h3>Importing</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> { </span><span class="hl-2">PayU</span><span class="hl-0">, </span><span class="hl-2">Order</span><span class="hl-0">, </span><span class="hl-2">Buyer</span><span class="hl-0">, </span><span class="hl-2">Product</span><span class="hl-0">, </span><span class="hl-2">Currency</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;@ingameltd/payu&quot;</span><span class="hl-0">;</span>
+</code></pre>
+
+<a href="#initialization" id="initialization" style="color: inherit; text-decoration: none;">
+  <h3>Initialization</h3>
+</a>
+<ul>
+<li><strong>clientId</strong> : Client ID from PayU</li>
+<li><strong>clientSecret</strong> : client secret from panel</li>
+<li><strong>merchantPosId</strong> : pos id from panel</li>
+<li><strong>secondKey</strong> : second key from panel</li>
+</ul>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">payU</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-6">PayU</span><span class="hl-0">(</span><span class="hl-2">clientId</span><span class="hl-0">, </span><span class="hl-2">clientSecret</span><span class="hl-0">, </span><span class="hl-2">merchantPosId</span><span class="hl-0">, </span><span class="hl-2">secondKey</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">sandbox:</span><span class="hl-0"> </span><span class="hl-4">false</span><span class="hl-0">,</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#create-an-order" id="create-an-order" style="color: inherit; text-decoration: none;">
+  <h3>Create an order</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">createOrder</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">notifyUrl:</span><span class="hl-0"> </span><span class="hl-3">&quot;https://my.shop.notify.com/notify&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">customerIp:</span><span class="hl-0"> </span><span class="hl-3">&quot;127.0.0.1&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">continueUrl:</span><span class="hl-0"> </span><span class="hl-3">&quot;https://myshop.com/order?id=abc&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">description:</span><span class="hl-0"> </span><span class="hl-3">&quot;My order&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">currencyCode:</span><span class="hl-0"> </span><span class="hl-2">Currency</span><span class="hl-0">.</span><span class="hl-5">PLN</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">totalAmount:</span><span class="hl-0"> </span><span class="hl-7">2000</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">buyer:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">email:</span><span class="hl-0"> </span><span class="hl-3">&quot;buyer@email.com&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-2">products:</span><span class="hl-0"> [</span><br/><span class="hl-0">    { </span><span class="hl-2">name:</span><span class="hl-0"> </span><span class="hl-3">&quot;mobile phone #1&quot;</span><span class="hl-0">, </span><span class="hl-2">quantity:</span><span class="hl-0"> </span><span class="hl-7">1</span><span class="hl-0">, </span><span class="hl-2">unitPrice:</span><span class="hl-0"> </span><span class="hl-7">1000</span><span class="hl-0"> },</span><br/><span class="hl-0">    { </span><span class="hl-2">name:</span><span class="hl-0"> </span><span class="hl-3">&quot;mobile phone #2&quot;</span><span class="hl-0">, </span><span class="hl-2">quantity:</span><span class="hl-0"> </span><span class="hl-7">1</span><span class="hl-0">, </span><span class="hl-2">unitPrice:</span><span class="hl-0"> </span><span class="hl-7">1000</span><span class="hl-0"> },</span><br/><span class="hl-0">  ],</span><br/><span class="hl-0">});</span>
+</code></pre>
+
+<a href="#capture-order" id="capture-order" style="color: inherit; text-decoration: none;">
+  <h3>Capture order</h3>
+</a>
+<p>If your shop does not approve payments automatically, you need to capture them and confirm.</p>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">captureOrder</span><span class="hl-0">(</span><span class="hl-3">&quot;payU order Id from notification&quot;</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#cancel-order" id="cancel-order" style="color: inherit; text-decoration: none;">
+  <h3>Cancel order</h3>
+</a>
+<p>To cancel an order before completed call this method.</p>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">cancelOrder</span><span class="hl-0">(</span><span class="hl-3">&quot;payU order Id from notification&quot;</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#refund-order" id="refund-order" style="color: inherit; text-decoration: none;">
+  <h3>Refund order</h3>
+</a>
+<p>To refund an order after completed call this method.</p>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">result</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">refundOrder</span><span class="hl-0">(</span><span class="hl-3">&quot;payU order Id from notification&quot;</span><span class="hl-0">, </span><span class="hl-3">&quot;reason&quot;</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#verify-notification" id="verify-notification" style="color: inherit; text-decoration: none;">
+  <h3>Verify notification</h3>
+</a>
+<p>To verify notification are valid cryptogrpically this method can be used.</p>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">headers</span><span class="hl-0"> = </span><span class="hl-2">req</span><span class="hl-0">.</span><span class="hl-2">headers</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">isValid</span><span class="hl-0"> = </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">verifyNotification</span><span class="hl-0">(</span><br/><span class="hl-0">  </span><span class="hl-2">headers</span><span class="hl-0">[</span><span class="hl-3">&quot;OpenPayu-Signature&quot;</span><span class="hl-0">],</span><br/><span class="hl-0">  </span><span class="hl-8">JSON</span><span class="hl-0">.</span><span class="hl-6">stringify</span><span class="hl-0">(</span><span class="hl-2">req</span><span class="hl-0">.</span><span class="hl-2">body</span><span class="hl-0">)</span><br/><span class="hl-0">);</span><br/><br/><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-2">isValid</span><span class="hl-0">);</span>
+</code></pre>
+
+<a href="#validate-ips" id="validate-ips" style="color: inherit; text-decoration: none;">
+  <h3>Validate IPs</h3>
+</a>
+<p>To validate IPs are correct, use following method. It will automatically adjust to match
+your environment(production or sandbox)</p>
+<pre><code class="language-typescript"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">isIpValid</span><span class="hl-0"> = </span><span class="hl-2">payU</span><span class="hl-0">.</span><span class="hl-6">isIpValid</span><span class="hl-0">(</span><span class="hl-3">&quot;127.0.0.1&quot;</span><span class="hl-0">);</span>
+</code></pre>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-enum"><a href="enums/Country.html" class="tsd-kind-icon">Country</a></li><li class="tsd-kind-enum"><a href="enums/Currency.html" class="tsd-kind-icon">Currency</a></li><li class="tsd-kind-class"><a href="classes/AuthenticationError.html" class="tsd-kind-icon">Authentication<wbr/>Error</a></li><li class="tsd-kind-class"><a href="classes/OAuth.html" class="tsd-kind-icon">OAuth</a></li><li class="tsd-kind-class"><a href="classes/PayU.html" class="tsd-kind-icon">PayU</a></li><li class="tsd-kind-class"><a href="classes/PayUError.html" class="tsd-kind-icon">PayUError</a></li><li class="tsd-kind-interface"><a href="interfaces/AuthenticationErrorResponse.html" class="tsd-kind-icon">Authentication<wbr/>Error<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/AuthenticationResponse.html" class="tsd-kind-icon">Authentication<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/Buyer.html" class="tsd-kind-icon">Buyer</a></li><li class="tsd-kind-interface"><a href="interfaces/Order.html" class="tsd-kind-icon">Order</a></li><li class="tsd-kind-interface"><a href="interfaces/OrderCreateResponse.html" class="tsd-kind-icon">Order<wbr/>Create<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/OrderCreateStatus.html" class="tsd-kind-icon">Order<wbr/>Create<wbr/>Status</a></li><li class="tsd-kind-interface"><a href="interfaces/OrderStatusResponse.html" class="tsd-kind-icon">Order<wbr/>Status<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/PayUOptions.html" class="tsd-kind-icon">PayUOptions</a></li><li class="tsd-kind-interface"><a href="interfaces/Product.html" class="tsd-kind-icon">Product</a></li><li class="tsd-kind-interface"><a href="interfaces/Status.html" class="tsd-kind-icon">Status</a></li><li class="tsd-kind-variable"><a href="modules.html#AuthorizeEndpoint" class="tsd-kind-icon">Authorize<wbr/>Endpoint</a></li><li class="tsd-kind-variable"><a href="modules.html#OrderEndpoint" class="tsd-kind-icon">Order<wbr/>Endpoint</a></li><li class="tsd-kind-variable"><a href="modules.html#ProductionIPs" class="tsd-kind-icon">ProductionIPs</a></li><li class="tsd-kind-variable"><a href="modules.html#SandboxIPs" class="tsd-kind-icon">SandboxIPs</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
