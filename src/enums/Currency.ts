@@ -4,8 +4,9 @@
  * @enum {string}
  */
 export enum Currency {
-    PLN = 'PLN',
-    EUR = 'EUR',
-    GBP = 'GPB',
-    CZK = 'CZK'
+  PLN = "PLN",
+  EUR = "EUR",
+  GBP = "GPB",
+  CZK = "CZK",
+  USD = "USD",
 }
