@@ -84,7 +84,7 @@ const headers = req.headers;
 
 const isValid = payU.verifyNotification(
   headers["OpenPayu-Signature"],
-  JSON.stringify(req.body)
+  req.body
 );
 
 console.log(isValid);
