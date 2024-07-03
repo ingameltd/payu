@@ -84,11 +84,14 @@ const headers = req.headers;
 
 const isValid = payU.verifyNotification(
   headers["OpenPayu-Signature"],
-  JSON.stringify(req.body)
+  req.rawBody
 );
 
 console.log(isValid);
 ```
+
+Please note that in rawBody should contain raw (unchanged) request body. This can be framework specific - use the method from its documentation.
+Please don't use JSON.stringify function because it will add some slashes and md5 checksum calculation will be incorrect causing fail validation.
 
 ### Validate IPs
 
